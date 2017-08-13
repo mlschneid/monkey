@@ -1,16 +1,20 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"os"
+	"os/user"
+
+	"github.com/mlschneid/monkey/repl"
+)
 
 func main() {
-	input := `let five = 5;	
-let ten = 10;
-let add = fn (x,y){
-	x + y;
-};
+	user, err := user.Current()
+	if err != nil {
+		panic(err)
+	}
 
-let result = add(five, ten);
-`
-
-	fmt.Printf(input)
+	fmt.Printf("Hello %s! This is the monkey programming language!\n", user.Username)
+	fmt.Printf("Starting REPL...")
+	repl.Start(os.Stdin, os.Stdout)
 }
